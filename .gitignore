@@ -1,3 +1,7 @@
+#Sqlite and CSVs to avoid cluttering the repo with data
+*.db
+*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
