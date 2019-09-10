@@ -1,0 +1,53 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{binance}{online}{}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(Accessed: 12-08-2019)}
+      \field{title}{Binance REST API}
+      \verb{urlraw}
+      \verb https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
+      \endverb
+      \verb{url}
+      \verb https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
+      \endverb
+    \endentry
+    \entry{coinbase}{misc}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://docs.pro.coinbase.com/}}
+      \field{title}{Coinbase Pro REST API}
+    \endentry
+    \entry{FTX}{misc}{}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://web.archive.org/web/20190812123332/https://ftx.com/volume-monitor}{https://ftx.com/volume-monitor}}
+      \field{note}{Accessed: 12-08-2019}
+      \field{title}{FTX Volume Monitor}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,3 +1,11 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Data}{}% 2
-\BOOKMARK [1][-]{section.3}{Diffusion Models}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Orders}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Order Book Data}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Empirical Analysis}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Market Movement Time Series}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Order Rates}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Price Change Variance}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Diffusion Models}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Altcoin-Bitcoin Correlations}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Arbitrage Trading Between Exchanges}{section.4}% 11
