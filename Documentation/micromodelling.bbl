@@ -32,6 +32,53 @@
       \verb https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
       \endverb
     \endentry
+    \entry{marketmaking}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=12ef4925945d218592da34e0e46c4eb4}{%
+           family={Chakraborty},
+           familyi={C\bibinitperiod},
+           given={Tanmoy},
+           giveni={T\bibinitperiod}}}%
+        {{hash=17efa7d29b8763456cc47d49b27ade63}{%
+           family={Kearns},
+           familyi={K\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {San Jose, California, USA}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{b30c44753ddec671ad7436989c5fd9bb}
+      \strng{fullhash}{b30c44753ddec671ad7436989c5fd9bb}
+      \strng{bibnamehash}{b30c44753ddec671ad7436989c5fd9bb}
+      \strng{authorbibnamehash}{b30c44753ddec671ad7436989c5fd9bb}
+      \strng{authornamehash}{b30c44753ddec671ad7436989c5fd9bb}
+      \strng{authorfullhash}{b30c44753ddec671ad7436989c5fd9bb}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 12th ACM Conference on Electronic Commerce}
+      \field{isbn}{978-1-4503-0261-6}
+      \field{series}{EC '11}
+      \field{title}{Market Making and Mean Reversion}
+      \field{year}{2011}
+      \field{pages}{307\bibrangedash 314}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/1993574.1993622
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.acm.org/10.1145/1993574.1993622
+      \endverb
+      \verb{url}
+      \verb http://doi.acm.org/10.1145/1993574.1993622
+      \endverb
+      \keyw{algorithmic trading,computational finance,market making,mean reversion}
+    \endentry
     \entry{coinbase}{misc}{}
       \field{sortinit}{C}
       \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
@@ -46,6 +93,48 @@
       \field{howpublished}{\href{https://web.archive.org/web/20190812123332/https://ftx.com/volume-monitor}{https://ftx.com/volume-monitor}}
       \field{note}{Accessed: 12-08-2019}
       \field{title}{FTX Volume Monitor}
+    \endentry
+    \entry{newsandorderflows}{article}{}
+      \name{author}{2}{}{%
+        {{hash=42b730b84e779f5ee6f6258167e23ccd}{%
+           family={Love},
+           familyi={L\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=99b6e2a93511cba35a186b7eb3a9e554}{%
+           family={Payne},
+           familyi={P\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{4d57d3561862bcacbbf3780321fe6c53}
+      \strng{fullhash}{4d57d3561862bcacbbf3780321fe6c53}
+      \strng{bibnamehash}{4d57d3561862bcacbbf3780321fe6c53}
+      \strng{authorbibnamehash}{4d57d3561862bcacbbf3780321fe6c53}
+      \strng{authornamehash}{4d57d3561862bcacbbf3780321fe6c53}
+      \strng{authorfullhash}{4d57d3561862bcacbbf3780321fe6c53}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In textbook models of exchange rate determination, the news contained in public information announcements is directly impounded into prices with there being no role for trading in this process of information assimilation. This paper directly tests this theoretical result using transaction level exchange rate return and trading data and a sample of scheduled macroeconomic announcements. The main result of the paper is that even information that is publicly and simultaneously released to all market participants is partially impounded into prices via the key micro level price determinant—order flow. We quantify the role that order flow plays and find that approximately one third of price-relevant information is incorporated via the trading process.}
+      \field{issn}{00221090, 17566916}
+      \field{journaltitle}{The Journal of Financial and Quantitative Analysis}
+      \field{number}{2}
+      \field{title}{Macroeconomic News, Order Flows, and Exchange Rates}
+      \field{volume}{43}
+      \field{year}{2008}
+      \field{pages}{467\bibrangedash 488}
+      \range{pages}{22}
+      \verb{urlraw}
+      \verb http://www.jstor.org/stable/27647357
+      \endverb
+      \verb{url}
+      \verb http://www.jstor.org/stable/27647357
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

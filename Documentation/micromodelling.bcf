@@ -1923,9 +1923,11 @@
     <bcf:datasource type="file" datatype="bibtex">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">FTX</bcf:citekey>
-    <bcf:citekey order="2">binance</bcf:citekey>
-    <bcf:citekey order="3">coinbase</bcf:citekey>
+    <bcf:citekey order="1">marketmaking</bcf:citekey>
+    <bcf:citekey order="2">newsandorderflows</bcf:citekey>
+    <bcf:citekey order="3">FTX</bcf:citekey>
+    <bcf:citekey order="4">binance</bcf:citekey>
+    <bcf:citekey order="5">coinbase</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
