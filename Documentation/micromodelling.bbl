@@ -32,6 +32,32 @@
       \verb https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md
       \endverb
     \endentry
+    \entry{binancewss}{online}{}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(Accessed: 12-08-2019)}
+      \field{title}{Binance Web Socket Stream API}
+      \verb{urlraw}
+      \verb https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md#how-to-manage-a-local-order-book-correctly
+      \endverb
+      \verb{url}
+      \verb https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md#how-to-manage-a-local-order-book-correctly
+      \endverb
+    \endentry
+    \entry{bitshares}{online}{}
+      \field{sortinit}{B}
+      \field{sortinithash}{276475738cc058478c1677046f857703}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(Accessed: 12-08-2019)}
+      \field{title}{Bitshares Exchange}
+      \verb{urlraw}
+      \verb https://bitshares.org/
+      \endverb
+      \verb{url}
+      \verb https://bitshares.org/
+      \endverb
+    \endentry
     \entry{marketmaking}{inproceedings}{}
       \name{author}{2}{}{%
         {{hash=12ef4925945d218592da34e0e46c4eb4}{%
