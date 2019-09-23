@@ -39,6 +39,9 @@
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {2}Data}{2}{section.2}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Orders}{2}{subsection.2.1}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Order Book Data}{2}{subsection.2.2}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {3}Binomial Markov Model}{2}{section.3}}
+\abx@aux@cite{markovclt}
+\abx@aux@segm{0}{0}{markovclt}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:log_returns}{{1a}{3}{Whole day\relax }{figure.caption.1}{}}
 \newlabel{sub@fig:log_returns}{{a}{3}{Whole day\relax }{figure.caption.1}{}}
@@ -46,12 +49,20 @@
 \newlabel{sub@fig:log_returns_zoom}{{b}{3}{Typical section\relax }{figure.caption.1}{}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The log returns for each order on 1st July 2019. Green points represent market buy orders, red points represent market sell orders.\relax }}{3}{figure.caption.1}}
 \newlabel{log_returns}{{1}{3}{The log returns for each order on 1st July 2019. Green points represent market buy orders, red points represent market sell orders.\relax }{figure.caption.1}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {3}Empirical Analysis}{3}{section.3}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Market Movement Time Series}{3}{subsection.3.1}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Order Rates}{3}{subsection.3.2}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Price Change Variance}{3}{subsection.3.3}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4}Market Models}{3}{section.4}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Basic Markov Binomial Model}{3}{subsection.4.1}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Model}{3}{subsection.3.1}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Statistical Analysis}{4}{subsection.3.2}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Markov Property}{4}{subsubsection.3.2.1}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Plots of $\mathbb  {E}(X_i | X_{i-1}, X_{i-2}) - \mathbb  {E}(X_i | X_{i-1})$ with $95\%$ confidence interval shown for each day assuming no dependence on $X_{i - 2}$. In clockwise order, the state values are $(X_{i - 2} = 0, X_{i - 1} = 0), (X_{i - 2} = 1, X_{i - 1} = 0), (X_{i - 2} = 0, X_{i - 1} = 1), (X_{i - 2} = 1, X_{i - 1} = 1)$\relax }}{4}{figure.caption.2}}
+\newlabel{CI95markov}{{2}{4}{Plots of $\mathbb {E}(X_i | X_{i-1}, X_{i-2}) - \mathbb {E}(X_i | X_{i-1})$ with $95\%$ confidence interval shown for each day assuming no dependence on $X_{i - 2}$. In clockwise order, the state values are $(X_{i - 2} = 0, X_{i - 1} = 0), (X_{i - 2} = 1, X_{i - 1} = 0), (X_{i - 2} = 0, X_{i - 1} = 1), (X_{i - 2} = 1, X_{i - 1} = 1)$\relax }{figure.caption.2}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Plots of $\mathbb  {E}(X_i | X_{i-1}, X_{i-2}, X_{i-3}) - \mathbb  {E}(X_i | X_{i-1}, X_{i - 2})$ with $95\%$ confidence interval shown for each day assuming that there is no dependence on $X_{i-3}$. The titles of each plot give the state of the chain.\relax }}{4}{figure.caption.3}}
+\newlabel{CI952ndordermarkov}{{3}{4}{Plots of $\mathbb {E}(X_i | X_{i-1}, X_{i-2}, X_{i-3}) - \mathbb {E}(X_i | X_{i-1}, X_{i - 2})$ with $95\%$ confidence interval shown for each day assuming that there is no dependence on $X_{i-3}$. The titles of each plot give the state of the chain.\relax }{figure.caption.3}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Exponential Order Rates}{5}{subsubsection.3.2.2}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Trade Mean and Order Rates Through Time}{5}{subsubsection.3.2.3}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4}Model Improvements}{5}{section.4}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Markov Property}{5}{subsection.4.1}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces $p(x)$ (Expectation) against $x$ (EMA), $\alpha = 0.3$\relax }}{5}{figure.caption.4}}
+\newlabel{probgivenema}{{4}{5}{$p(x)$ (Expectation) against $x$ (EMA), $\alpha = 0.3$\relax }{figure.caption.4}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Statistical Analysis}{5}{subsubsection.4.1.1}}
 \abx@aux@refcontextdefaultsdone
 \abx@aux@defaultrefcontext{0}{binance}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{binancewss}{nty/global//global/global}
@@ -59,4 +70,7 @@
 \abx@aux@defaultrefcontext{0}{marketmaking}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{coinbase}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{FTX}{nty/global//global/global}
+\abx@aux@defaultrefcontext{0}{markovclt}{nty/global//global/global}
 \abx@aux@defaultrefcontext{0}{newsandorderflows}{nty/global//global/global}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5}Appendix}{6}{section.5}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Order Interarrivals}{6}{subsection.5.1}}

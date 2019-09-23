@@ -29,10 +29,8 @@ The scripts written for this study to download, analyse and model the cryptocurr
 Data was acquired from the exchanges Binance and Coinbase, which respectively account for approximately $17\%$ and $2.6\%$ of the global spot volume at the time of writing.\cite{FTX} These numbers are likely to have been different in the time frames studied, especially before 2018 because Binance only opened in late 2017.\footnote{The website coinmarketcap.com can be used to track exchange volume through time, although the reported volumes may be inaccurate with some exchanges reporting fake volume. We haven't perused the tracking of the studied exchanges' volume through time}. Both exchanges offer REST APIs\cite{binance}\cite{coinbase} which give historical trade data. Each market order (that is either a market order executed on an exchange or a limit order that overlaps with the other side of the order book and is hence reported as a market order) results in a series of trades where liquidity is removed from the exchange. For example if a large market order is placed that ends up removing many levels in the order book, then in the data we see multiple trades at the same time increasing in price. The exchanges record and publish the time, volume, price and the side of the order book that the maker is on. The in the github repository can be used to download this data although it takes some time due to rate limits. In order to analyse the orders, the raw data from the exchanges is downloaded and stored in a database and then orders are that occur at the same time and remove liquidity from the same side are grouped together. The \texttt{lib/} folder of the \emph{GitHub} repository contains contains a \emph{python} package \texttt{exchange} that is used throughout the study to handle database interactions in order to load orders.  
 \subsection{Order Book Data}
 Typically cryptocurrency exchanges do not offer historic order book data through their APIs. Some websites do offer the purchase of orderbook data but the data has a low sample rate so does not have the required level of granularity. Binance and Coinbase do however offer Web Socket Streams of exchange data, so it is possible to record the order book through time. The Binance WSS API provides updates every $0.1$ seconds \cite{binancewss} where as Coinbase gives real time updates\cite{coinbase}. At the time of writing Binance is active enough to potentially see tens of changes to the orderbook (reported as the \texttt{Update ID} in the order book WSS) per sample, with Coinbase enjoying about $10\%$ the number of updates. An example script recording the WSSs can be found in the \emph{Github} repository in the \texttt{Download/} folder. Decentralized exchanges in which orders are written to a blockchain, like Bitshares, clearly allow the access of historical order book data, but these have not been explored due to the low volume and the lack of high frequency trading on these exchanges, making them fundamentally different from the main high volume price driving exchanges studied\cite{bitshares}. 
-\section{Empirical Analysis}
-\subsection{Market Movement Time Series}
-From each order, it is possible to calculate the price change caused by that order. That is, if the order occurs at time $t$ and $S_{t_{+(-)}}$ is the last traded price just after (before) time $t$ then the price change caused by order $i$, $R_i$, is given by $R_i = S_{t_{+}} / S_{t_{-}}$. Let $r_i = \log R_i$. Figure \ref{log_returns} shows this data plotted for a typical trading day.  
-\begin{figure}
+\section{Binomial Markov Model}
+\begin{figure}[h]
     \centering
     \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\textwidth]{images/log_returns_per_trade}
@@ -47,15 +45,11 @@ From each order, it is possible to calculate the price change caused by that ord
     \caption{The log returns for each order on 1st July 2019. Green points represent market buy orders, red points represent market sell orders.}
     \label{log_returns}
 \end{figure}
-We see from this that orders can generally be placed in to one of three categories. They either increase the price, decrease the price or do not alter the price. This makes a lot of sense as any incoming order order will either be on the same or opposite side of the order book, so the price will either change down, likely undoing the previous increase (leading to the observed symmetry) or it will stay the same. Sometimes an order will break through a level in the order book leading to two consecutive price changes in the same direction.
-\subsection{Order Rates}
-As explained below, a key statistic when modelling an order-driven market is the order rate.
-\subsection{Price Change Variance}
-\section{Market Models}
-\subsection{Basic Markov Binomial Model}
-In this model, each order either increases the log price by $\delta s$, decreases the log price by $\delta s$ (we ignore trades that do not alter the price). We then assume order states (whether the order increases or decreases the price) form a Markov chain $X_i$ on the state space $\{-1, 1\}$ with transition matrix $P = (p_{ij})$ which is such that a stationary distribution exists. Let $\lambda_{ij}, i,j \in \{-1, 1\}$ be the order rate for the chain moving from state $i$ to $j$. By the ergodic theorem if $V(s, n)$ is the number of visits to state $s$ before step $n$ and $\pi$ is the stationary distribution and $\sigma^2$ is the asymptotic variance, then by the central limit theorem
+The Binomial Markov model presented in this section will serve as a base for other mode complex models. Figure \ref{log_returns} shows the log return caused by each trade, that is the logarithm of the ratio of the trade price and the previous trade price. There is a high level of dependence between the market state trades and incoming trades. To capture this, we propose a simple Markov binomial model. 
+\subsection{Model}
+We suppose that each trade either increases the log price by $\delta s$ or decreases the log price by $\delta s$ (we ignore trades that do not alter the price). We then assume order states (whether the order increases or decreases the price) form a Markov chain $X_i$ on the state space $\{-1, 1\}$ with transition matrix $P = (p_{ij})$ which is such that a stationary distribution exists. Let $\lambda_{ij}, i,j \in \{-1, 1\}$ be the order rate for the chain moving from state $i$ to $j$. If $V(s, n)$ is the number of visits to state $s$ before step $n$ and $\pi$ is the stationary distribution and $\sigma^2 = \sum_{i=1}^{\infty}\text{Cov}(X_0, X_i)$, then by the central limit theorem for Markov Chains \cite{markovclt}
 \begin{equation}
-\frac{V(s, n) - n\pi_s}{\sigma \sqrt{n}} \xrightarrow{\text{d}} \mathcal{N}(0, 1). %THIS MIGHT NOT BE TRUE
+\frac{V(s, n) - n\pi_s}{\sigma \sqrt{n}} \xrightarrow{\text{d}} \mathcal{N}(0, 1).
 \end{equation}
 Hence if $U_n$ ($D_n$) is the number of price increasing (decreasing) trades before time step $n$, we have that
 \begin{align}
@@ -83,9 +77,61 @@ Hence,
 \end{equation}
 for large $S$. If $R_S$ is the log return after time $S$, it follows that
 \begin{equation}
-\mathbb{P}\left(R_S < \frac{\alpha}{\delta s}\right) = \sum_{n=1}^{\infty} \mathbb{P}\left(U_n - D_n < \frac{\alpha}{\delta s}\right)\mathbb{P}(N = n)
+\mathbb{P}\left(R_S \leq \frac{\alpha}{\delta s}\right) = \sum_{n=1}^{\infty} \mathbb{P}\left(U_n - D_n \leq \alpha\right)\mathbb{P}(N = n)
 \end{equation}
 which is easily approximated using the derived normal approximations.
+\subsection{Statistical Analysis}
+For this model to be valid and provide insight, we need to verify that the assumptions made are reasonable.
+\subsubsection{Markov Property}
+Under the null hypothesis that the process is Markovian 
+\begin{equation}
+\mathbb{E}\left(f(X_i) | X_{i-1}, ... ,X_{i - k}\right) = \mathbb{E}\left(f(X_i) | X_{i-1}\right) \ \forall i > 0, k < i
+\end{equation}
+and so to test whether this holds we plot the conditional expectations of $X_i$ where $X_i = 0$ if the $i$th trade decreases the price and $X_i = 1$ if the $i$th trade increases the price.  
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/markov95}
+    \caption{Plots of $\mathbb{E}(X_i | X_{i-1}, X_{i-2}) - \mathbb{E}(X_i | X_{i-1})$ with $95\%$ confidence interval shown for each day assuming no dependence on $X_{i - 2}$. In clockwise order, the state values are $(X_{i - 2} = 0, X_{i - 1} = 0), (X_{i - 2} = 1, X_{i - 1} = 0), (X_{i - 2} = 0, X_{i - 1} = 1), (X_{i - 2} = 1, X_{i - 1} = 1)$}
+    \label{CI95markov}
+\end{figure}
+Figure \ref{CI95markov} shows a clear rejection of the Markov hypothesis, indicating that information is missing under the assumption. A similar analysis in Figure \ref{CI952ndordermarkov}. Looking at $\mathbb{E}(X_i | X_{i-1}. X_{i - 2}, X_{i-3}) - \mathbb{E}(X_i | X_{i-1}. X_{i - 2})$ indicates that after two consecutive orders in the same direction, there is a much higher chance of a reversal order than given under the Markov hypothesis, indicating that trades tend to try and undo price changes. This could be an indication of arbitrage trading.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/2ndordermarkov}
+    \caption{Plots of $\mathbb{E}(X_i | X_{i-1}, X_{i-2}, X_{i-3}) - \mathbb{E}(X_i | X_{i-1}, X_{i - 2})$ with $95\%$ confidence interval shown for each day assuming that there is no dependence on $X_{i-3}$. The titles of each plot give the state of the chain.}
+    \label{CI952ndordermarkov}
+\end{figure}
+\subsubsection{Exponential Order Rates}
+In general the complete order interarrival times (not ignoring trades that alter the price) form a Weibull$(\alpha, \beta)$ distribution (a distribution with cumulative distribution function $F_{\alpha,\beta}(x) = 1 - e^{\alpha x^\beta}$), which we assume is due to a process which is more or less exponentially distributed (independent retail investor trades, for example) and then with some reactions which lead to a order rate function that depends on orders occurring. This analysis is left to the appendix.
+\subsubsection{Trade Mean and Order Rates Through Time}
+\section{Model Improvements}
+We now address the issues with the basic Markov model shown in the statistical analysis.
+\subsection{Markov Property}
+Figure \ref{CI95markov} shows that the direction of the next order depends on the history of the chain as well as the current state. Figure \ref{CI952ndordermarkov} suggests that the proportion of previous price increasing trades can be used to determine whether the markov model over or under predicts the probability of the next trade increasing the price. To investigate this we introduce an exponential moving average (EMA) of the trade property as follows. If $X_i$ is defined as above, let the EMA $S_i$ be such that
+\begin{align}
+S_1 &= X_1 \\
+S_i &= \alpha X_i + (1 - \alpha)S_{i-1}
+\end{align}
+for $\alpha \in (0, 1)$. We wish to calculate the marginal expectation $\mathbb{E}(X_i | S_{i-1})$. Noting that $\mathbb{E}(X_i | S_{i-1} \leq s) = \mathbb{P}(X_i = 1 | S_{i-1} \leq s)$ and using Bayes' theorem we have that
+\begin{equation}
+\mathbb{E}(X_i | S_{i-1} \leq s) = \frac{\mathbb{P}(S_{i-1} \leq s | X_i = 1)\mathbb{P}(X_i = 1)}{\mathbb{P}(S_{i-1} \leq s)}
+\end{equation}
+which can be computed empirically from the data. Now let $f(s) = \mathbb{E}(X_i | S_{i-1} \leq s)$, $p(s) = \mathbb{E}(X_i | S_{i-1} = s)$ and $\mu(s)$ be the probability law defined by $S_i$. Then (TODO sort out notation for this)
+\begin{align}
+f(x) &= \frac{\int_0^x p(t)d\mu(t)}{\int_0^x d\mu} \\
+\Rightarrow p(x) &= \frac{df}{d\mu}(x)\int_0^xd\mu + f(x)
+\end{align}
+which can then be calculated empirically from the data, this is shown in Figure \ref{probgivenema}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/conditional_expectation1}
+    \caption{$p(x)$ (Expectation) against $x$ (EMA), $\alpha = 0.3$}
+    \label{probgivenema}
+\end{figure}
+\subsubsection{Statistical Analysis}
+After deriving this result we now show that the EMA method is an effective way to predict market movements. To do this we calculate the Brier Score for the next trade forecasts calculated using the EMA. A difficulty in evaluating the performance of the EMA method for forecasting the next trade, as with evaluating any forecast, is to know whether a better forecasting technique exists. We compare against a neural network to see if the moving average trade is likely capturing relevant information.
+\section{Appendix}
+\subsection{Order Interarrivals}
 \medskip
 \printbibliography
 
