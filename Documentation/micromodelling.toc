@@ -12,9 +12,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.1}Basic Markov Model}{3}{subsection.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Generating and Evaluating Forecasts}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Parameter Estimation, Generation and Evaluation of Forecasts}{4}{subsection.3.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{\numberline {3.2.1}Trade Mean and Order Rates Through Time}{4}{subsubsection.3.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.2}Evaluation of parameter prediction}{4}{subsubsection.3.2.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.3}Problems with the Model}{4}{subsection.3.3}
 \defcounter {refsection}{0}\relax 
@@ -26,10 +28,12 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.1}Markov Property}{5}{subsection.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.1}Statistical Analysis}{5}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Statistical Analysis}{6}{subsubsection.4.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Appendix}{6}{section.5}
+\contentsline {subsection}{\numberline {4.2}Parameter Price Dependence}{7}{subsection.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1}Portfolio Selection}{6}{subsection.5.1}
+\contentsline {section}{\numberline {5}Appendix}{7}{section.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2}Order Interarrivals}{6}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.1}Portfolio Selection}{7}{subsection.5.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2}Order Interarrivals}{7}{subsection.5.2}

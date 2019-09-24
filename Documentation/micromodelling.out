@@ -4,14 +4,16 @@
 \BOOKMARK [2][-]{subsection.2.2}{Order Book Data}{section.2}% 4
 \BOOKMARK [1][-]{section.3}{Binomial Markov Model}{}% 5
 \BOOKMARK [2][-]{subsection.3.1}{Basic Markov Model}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Generating and Evaluating Forecasts}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Parameter Estimation, Generation and Evaluation of Forecasts}{section.3}% 7
 \BOOKMARK [3][-]{subsubsection.3.2.1}{Trade Mean and Order Rates Through Time}{subsection.3.2}% 8
-\BOOKMARK [2][-]{subsection.3.3}{Problems with the Model}{section.3}% 9
-\BOOKMARK [3][-]{subsubsection.3.3.1}{Markov Property}{subsection.3.3}% 10
-\BOOKMARK [3][-]{subsubsection.3.3.2}{Exponential Order Rates}{subsection.3.3}% 11
-\BOOKMARK [1][-]{section.4}{Model Improvements}{}% 12
-\BOOKMARK [2][-]{subsection.4.1}{Markov Property}{section.4}% 13
-\BOOKMARK [3][-]{subsubsection.4.1.1}{Statistical Analysis}{subsection.4.1}% 14
-\BOOKMARK [1][-]{section.5}{Appendix}{}% 15
-\BOOKMARK [2][-]{subsection.5.1}{Portfolio Selection}{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.2}{Order Interarrivals}{section.5}% 17
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Evaluation of parameter prediction}{subsection.3.2}% 9
+\BOOKMARK [2][-]{subsection.3.3}{Problems with the Model}{section.3}% 10
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Markov Property}{subsection.3.3}% 11
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Exponential Order Rates}{subsection.3.3}% 12
+\BOOKMARK [1][-]{section.4}{Model Improvements}{}% 13
+\BOOKMARK [2][-]{subsection.4.1}{Markov Property}{section.4}% 14
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Statistical Analysis}{subsection.4.1}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Parameter Price Dependence}{section.4}% 16
+\BOOKMARK [1][-]{section.5}{Appendix}{}% 17
+\BOOKMARK [2][-]{subsection.5.1}{Portfolio Selection}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.2}{Order Interarrivals}{section.5}% 19

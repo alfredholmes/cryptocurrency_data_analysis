@@ -18,7 +18,7 @@
 \date{September 2019}
 \begin{document}
 \maketitle
-\abstract{Cryptocurrency markets, trading mechanisms and data acquisition are reviewed and models are developed to produce forecasts for the future Bitcoin price. First a basic Markov model is proposed, which models the market on a trade by trade basis. The model produces a forecast for the log return given the expected trade frequency and mean trade price return using Normal approximations. This is shown to produce forecasts that can be used to generate profitable portfolio selection after the exchange fees are taken into account. Then the model is developed to better fit the observed data and produce more accurate forecasts.}
+\abstract{Cryptocurrency markets, trading mechanisms and data acquisition are reviewed and models are developed to produce forecasts for the future Bitcoin price, with a description of how to apply the same procedure to predict other cryptocurrency markets for currencies that trade both against Bitcoin and USD. A basic Markov model is proposed, which models the market on a trade by trade basis. The model produces a forecast for the log return given the expected trade frequency and mean trade price return using Normal approximations. This is shown to produce forecasts that can be used to generate profitable portfolio selection after the exchange fees are taken into account. Then the model is developed to better fit the observed data and produce more accurate forecasts.}
 
 \tableofcontents
 \section{Introduction}
@@ -51,7 +51,7 @@ Typically cryptocurrency exchanges do not offer historic order book data through
 \end{figure}
 The Binomial Markov model presented in this section will serve as a base for other mode complex models. Figure \ref{log_returns} shows the log return caused by each trade, that is the logarithm of the ratio of the trade price and the previous trade price. There is a high level of dependence between the market state trades and incoming trades. To capture this, we propose a simple Markov binomial model. 
 \subsection{Basic Markov Model}
-We suppose that each trade either increases the log price by $\delta s$ or decreases the log price by $\delta s$ (we ignore trades that do not alter the price). We then assume order states (whether the order increases or decreases the price) form a Markov chain $X_i$ on the state space $\{-1, 1\}$ with transition matrix $P = (p_{ij})$ which is such that a stationary distribution exists. Let $\lambda_{ij}, i,j \in \{-1, 1\}$ be the order rate for the chain moving from state $i$ to $j$. If $V(s, n)$ is the number of visits to state $s$ before step $n$ and $\pi$ is the stationary distribution and $\sigma^2 = \sum_{i=1}^{\infty}\text{Cov}(X_0, X_i)$, then by the central limit theorem for Markov Chains \cite{markovclt}
+We suppose that each trade either increases the log price by $\delta$ or decreases the log price by $\delta$ (we ignore trades that do not alter the price). We then assume order states (whether the order increases or decreases the price) form a Markov chain $X_i$ on the state space $\{-1, 1\}$ with transition matrix $P = (p_{ij})$ which is such that a stationary distribution exists. Let $\lambda_{ij}, i,j \in \{-1, 1\}$ be the order rate for the chain moving from state $i$ to $j$. If $V(s, n)$ is the number of visits to state $s$ before step $n$ and $\pi$ is the stationary distribution and $\sigma^2 = \sum_{i=1}^{\infty}\text{Cov}(X_0, X_i)$, then by the central limit theorem for Markov Chains \cite{markovclt}
 \begin{equation}
 \frac{V(s, n) - n\pi_s}{\sigma \sqrt{n}} \xrightarrow{\text{d}} \mathcal{N}(0, 1).
 \end{equation}
@@ -81,11 +81,35 @@ Hence,
 \end{equation}
 for large $S$. If $R_S$ is the log return after time $S$, it follows that
 \begin{equation}
-\mathbb{P}\left(R_S \leq \frac{\alpha}{\delta s}\right) = \sum_{n=1}^{\infty} \mathbb{P}\left(U_n - D_n \leq \alpha\right)\mathbb{P}(N = n)
+\mathbb{P}\left(R_S \leq \frac{\alpha}{\delta}\right) = \sum_{n=1}^{\infty} \mathbb{P}\left(U_n - D_n \leq \alpha\right)\mathbb{P}(N = n)
 \end{equation}
 which is easily approximated using the derived normal approximations.
-\subsection{Generating and Evaluating Forecasts}
+\subsection{Parameter Estimation, Generation and Evaluation of Forecasts}
+The basic Markov model, for day $t$, is parametrized by the order rates ($\lambda_{i j}^t$), the transition probabilities ($p_{-1-1}^t, p_{11}^t$) and the mean change in the price caused by each trade $\delta^t$. To produce a forecast, these parameters need to be estimated and we propose this is done using linear regression on a transformed parameter time series. Let $\sigma(t) = \frac{1}{1 + e^{-x}}$ be the standard sigmoid function and let $\theta_t = (\sigma^{-1}(p_{-1-1}^t), \sigma^{-1}(p_{11}^t), \log\delta^t, \log\lambda^t)$ and then we fit the model
+\begin{equation}
+\theta_t = M (\theta_i)_{i=t - k}^{i=t-1} + \epsilon_t 
+\end{equation}
+where $M$ is a $k \times 4$ matrix and the $\epsilon_t$ are I.I.D. with a multivariate normal distribution. An interesting question is how much weight the prediction of these parameters has on the forecast. The transformation is performed to make sure that the predicted values from the time series can then be used to give meaningful results. For example, probabilities between $0$ and $1$ and positive rates and absolute value price increases.
 \subsubsection{Trade Mean and Order Rates Through Time}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/return_params}
+        \caption{$\delta^t$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/rate_params}
+        \caption{$\lambda_{ij}^t$}
+        \label{fig:log_returns_zoom}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{images/prob_params}
+        \caption{$p_{-1-1}^t$ and $p_{11}^t$}
+    \end{subfigure}
+    \caption{Daily parameter time series, plotted from 1st April 2018 for 500 days. Bitcoin price is shown behind for reference.}
+    \label{parameter_timeseries}
+\end{figure}
+\subsubsection{Evaluation of parameter prediction}
 \subsection{Problems with the Model}
 \subsubsection{Markov Property}
 Under the null hypothesis that the process is Markovian 
@@ -135,6 +159,7 @@ which can then be calculated empirically from the data, this is shown in Figure 
 \end{figure}
 \subsubsection{Statistical Analysis}
 After deriving this result we now show that the EMA method is an effective way to predict market movements, drastically improving the forecasting accuracy of the basic Markov model. To do this we calculate the Brier Score for the next trade forecasts calculated using the EMA. A difficulty in evaluating the performance of the EMA method for forecasting the next trade, as with evaluating any forecast, is to know whether a better forecasting technique exists. We compare against a neural network to see if the moving average trade is likely capturing relevant information.
+\subsection{Parameter Price Dependence}
 \section{Appendix}
 \subsection{Portfolio Selection}
 \subsection{Order Interarrivals}
