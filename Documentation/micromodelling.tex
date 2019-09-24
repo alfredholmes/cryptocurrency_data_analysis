@@ -14,9 +14,13 @@
 \author{Alfred Holmes}
 
 
+
 \date{September 2019}
 \begin{document}
-   \maketitle
+\maketitle
+\abstract{Cryptocurrency markets, trading mechanisms and data acquisition are reviewed and models are developed to produce forecasts for the future Bitcoin price. First a basic Markov model is proposed, which models the market on a trade by trade basis. The model produces a forecast for the log return given the expected trade frequency and mean trade price return using Normal approximations. This is shown to produce forecasts that can be used to generate profitable portfolio selection after the exchange fees are taken into account. Then the model is developed to better fit the observed data and produce more accurate forecasts.}
+
+\tableofcontents
 \section{Introduction}
 Cryptocurrencies are typically traded on order-driven markets in which market participants place limit and market orders. Limit orders are either bids or asks, bids being offers to buy at a particular price and asks offers to sell. Market orders are orders executed against the best available limit order prices (buying at the lowest ask or selling at the highest bid). If a limit order is placed that overlaps an existing limit order on the other side of the market, for example there is an offer to buy 1 BTC for 2 USD and someone offers to sell 1 BTC for 1 USD then the second limit order will be considered by the exchange as a market order and the trade will be priced at the original limit order. Order-driven markets are now the standard way that stocks, futures and currencies are traded. Two benefits of studying cryptocurrencies over traditional financial instruments is that the exchanges freely give out discretized order data and that the markets are always open, except for the odd update here and there. In a market, the quote asset is the asset against which the market asset is traded. For example in a BTC against USD market, the quote asset is USD.\\ \\
 This study examines the available granular data from the cryptocurrency markets to develop statistical models which explain the mechanisms for different factors cause price movements on both a large and micro scale. To do this we estimate the marginal distribution of the properties of the next order to arrive at the exchange, given the current market state. \\ \\
@@ -46,7 +50,7 @@ Typically cryptocurrency exchanges do not offer historic order book data through
     \label{log_returns}
 \end{figure}
 The Binomial Markov model presented in this section will serve as a base for other mode complex models. Figure \ref{log_returns} shows the log return caused by each trade, that is the logarithm of the ratio of the trade price and the previous trade price. There is a high level of dependence between the market state trades and incoming trades. To capture this, we propose a simple Markov binomial model. 
-\subsection{Model}
+\subsection{Basic Markov Model}
 We suppose that each trade either increases the log price by $\delta s$ or decreases the log price by $\delta s$ (we ignore trades that do not alter the price). We then assume order states (whether the order increases or decreases the price) form a Markov chain $X_i$ on the state space $\{-1, 1\}$ with transition matrix $P = (p_{ij})$ which is such that a stationary distribution exists. Let $\lambda_{ij}, i,j \in \{-1, 1\}$ be the order rate for the chain moving from state $i$ to $j$. If $V(s, n)$ is the number of visits to state $s$ before step $n$ and $\pi$ is the stationary distribution and $\sigma^2 = \sum_{i=1}^{\infty}\text{Cov}(X_0, X_i)$, then by the central limit theorem for Markov Chains \cite{markovclt}
 \begin{equation}
 \frac{V(s, n) - n\pi_s}{\sigma \sqrt{n}} \xrightarrow{\text{d}} \mathcal{N}(0, 1).
@@ -80,21 +84,22 @@ for large $S$. If $R_S$ is the log return after time $S$, it follows that
 \mathbb{P}\left(R_S \leq \frac{\alpha}{\delta s}\right) = \sum_{n=1}^{\infty} \mathbb{P}\left(U_n - D_n \leq \alpha\right)\mathbb{P}(N = n)
 \end{equation}
 which is easily approximated using the derived normal approximations.
-\subsection{Statistical Analysis}
-For this model to be valid and provide insight, we need to verify that the assumptions made are reasonable.
+\subsection{Generating and Evaluating Forecasts}
+\subsubsection{Trade Mean and Order Rates Through Time}
+\subsection{Problems with the Model}
 \subsubsection{Markov Property}
 Under the null hypothesis that the process is Markovian 
 \begin{equation}
 \mathbb{E}\left(f(X_i) | X_{i-1}, ... ,X_{i - k}\right) = \mathbb{E}\left(f(X_i) | X_{i-1}\right) \ \forall i > 0, k < i
 \end{equation}
-and so to test whether this holds we plot the conditional expectations of $X_i$ where $X_i = 0$ if the $i$th trade decreases the price and $X_i = 1$ if the $i$th trade increases the price.  
+and so to test whether this holds we plot the conditional expectations of $X_i$ where $X_i = 0$ if the $i$th trade decreases the price and $X_i = 1$ if the $i$th trade increases the price. We now show that order trades are not Markovian.  
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{images/markov95}
     \caption{Plots of $\mathbb{E}(X_i | X_{i-1}, X_{i-2}) - \mathbb{E}(X_i | X_{i-1})$ with $95\%$ confidence interval shown for each day assuming no dependence on $X_{i - 2}$. In clockwise order, the state values are $(X_{i - 2} = 0, X_{i - 1} = 0), (X_{i - 2} = 1, X_{i - 1} = 0), (X_{i - 2} = 0, X_{i - 1} = 1), (X_{i - 2} = 1, X_{i - 1} = 1)$}
     \label{CI95markov}
 \end{figure}
-Figure \ref{CI95markov} shows a clear rejection of the Markov hypothesis, indicating that information is missing under the assumption. A similar analysis in Figure \ref{CI952ndordermarkov}. Looking at $\mathbb{E}(X_i | X_{i-1}. X_{i - 2}, X_{i-3}) - \mathbb{E}(X_i | X_{i-1}. X_{i - 2})$ indicates that after two consecutive orders in the same direction, there is a much higher chance of a reversal order than given under the Markov hypothesis, indicating that trades tend to try and undo price changes. This could be an indication of arbitrage trading.
+Figure \ref{CI95markov} shows a clear rejection of the Markov hypothesis, indicating that information is missing under the assumption. A similar analysis in Figure \ref{CI952ndordermarkov}. Looking at $\mathbb{E}(X_i | X_{i-1}. X_{i - 2}, X_{i-3}) - \mathbb{E}(X_i | X_{i-1}. X_{i - 2})$ indicates that after two consecutive orders in the same direction, there is a much higher chance of a reversal order than given under the Markov hypothesis, indicating that trades tend to try and undo price changes. Section \ref{markovreplacement} suggests a way to improve this.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{images/2ndordermarkov}
@@ -103,10 +108,10 @@ Figure \ref{CI95markov} shows a clear rejection of the Markov hypothesis, indica
 \end{figure}
 \subsubsection{Exponential Order Rates}
 In general the complete order interarrival times (not ignoring trades that alter the price) form a Weibull$(\alpha, \beta)$ distribution (a distribution with cumulative distribution function $F_{\alpha,\beta}(x) = 1 - e^{\alpha x^\beta}$), which we assume is due to a process which is more or less exponentially distributed (independent retail investor trades, for example) and then with some reactions which lead to a order rate function that depends on orders occurring. This analysis is left to the appendix.
-\subsubsection{Trade Mean and Order Rates Through Time}
 \section{Model Improvements}
 We now address the issues with the basic Markov model shown in the statistical analysis.
 \subsection{Markov Property}
+\label{markovreplacement}
 Figure \ref{CI95markov} shows that the direction of the next order depends on the history of the chain as well as the current state. Figure \ref{CI952ndordermarkov} suggests that the proportion of previous price increasing trades can be used to determine whether the markov model over or under predicts the probability of the next trade increasing the price. To investigate this we introduce an exponential moving average (EMA) of the trade property as follows. If $X_i$ is defined as above, let the EMA $S_i$ be such that
 \begin{align}
 S_1 &= X_1 \\
@@ -129,8 +134,9 @@ which can then be calculated empirically from the data, this is shown in Figure 
     \label{probgivenema}
 \end{figure}
 \subsubsection{Statistical Analysis}
-After deriving this result we now show that the EMA method is an effective way to predict market movements. To do this we calculate the Brier Score for the next trade forecasts calculated using the EMA. A difficulty in evaluating the performance of the EMA method for forecasting the next trade, as with evaluating any forecast, is to know whether a better forecasting technique exists. We compare against a neural network to see if the moving average trade is likely capturing relevant information.
+After deriving this result we now show that the EMA method is an effective way to predict market movements, drastically improving the forecasting accuracy of the basic Markov model. To do this we calculate the Brier Score for the next trade forecasts calculated using the EMA. A difficulty in evaluating the performance of the EMA method for forecasting the next trade, as with evaluating any forecast, is to know whether a better forecasting technique exists. We compare against a neural network to see if the moving average trade is likely capturing relevant information.
 \section{Appendix}
+\subsection{Portfolio Selection}
 \subsection{Order Interarrivals}
 \medskip
 \printbibliography
